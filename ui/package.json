@@ -9,10 +9,17 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@solidjs/router": "^0.13.3",
+    "@unocss/reset": "^0.59.4",
+    "d3": "^7.9.0",
     "solid-js": "^1.8.15"
   },
   "devDependencies": {
+    "@types/d3": "^7.4.3",
+    "@types/node": "^20.12.8",
+    "@unocss/preset-uno": "^0.59.4",
     "typescript": "^5.4.5",
+    "unocss": "^0.59.4",
     "vite": "^5.2.0",
     "vite-plugin-solid": "^2.10.2"
   }
