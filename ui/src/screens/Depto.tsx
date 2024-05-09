@@ -2,21 +2,26 @@ import { createResource, Show, For, createEffect, createSignal } from "solid-js"
 import { type RouteSectionProps, useNavigate } from "@solidjs/router";
 import { fetchCountryPopulation } from "@/api";
 import { PopulationMap } from "@/components";
+import type { Prov } from "@/domain";
 
-export default function(_: RouteSectionProps) {
+export default function Depto(props: RouteSectionProps) {
 	const navigate = useNavigate();
 	const [deptos] = createResource(fetchCountryPopulation, { initialValue: [] });
+	const depto = () => deptos().find((d) => d.id === props.params.deptoId);
+
 	const [years, setYears] = createSignal<string[]>([]);
 	const [year, setYear] = createSignal<string | null>(null);
 
-	const sortedDeptos = () => {
+	const sortedProvs = (): Prov[] => {
 		const selectedYear = year();
-		if (!selectedYear) return deptos();
-		return [...deptos()].sort((a, b) => b.population[selectedYear] - a.population[selectedYear]);
+		const dep = depto();
+		if (!selectedYear) return [];
+		if (!dep) return [];
+		return [...dep.provs].sort((a, b) => b.population[selectedYear] - a.population[selectedYear]);
 	};
 
-	const onSelectDepto = (id: string) => {
-		navigate(`/${id}`);
+	const onSelectProv = (id: string) => {
+		navigate(`/${props.params.deptoId}/${id}`);
 	};
 
 	createEffect(() => {
@@ -31,12 +36,14 @@ export default function(_: RouteSectionProps) {
 		<div class="pb-8">
 			<Show when={year()} fallback={<p>Cargando...</p>}>{(y) => (
 				<>
-					<h1 class="text-center text-3xl font-bold">Bolivia</h1>
+					<Show when={depto()}>{(d) => (
+						<h1 class="text-center text-3xl font-bold">{d().name}</h1>
+					)}</Show>
 					<div class="max-w-lg mx-auto mt-4">
 						<PopulationMap
-							onClickMapSection={onSelectDepto}
-							populationMaps={sortedDeptos()}
+							populationMaps={sortedProvs()}
 							year={y()}
+							onClickMapSection={onSelectProv}
 						/>
 						<table class="mt-8 table-auto mx-auto">
 							<thead>
@@ -48,7 +55,7 @@ export default function(_: RouteSectionProps) {
 								</tr>
 							</thead>
 							<tbody>
-								<For each={sortedDeptos()}>{(depto, idx) => (
+								<For each={sortedProvs()}>{(depto, idx) => (
 									<tr
 										class=""
 										classList={{ "bg-slate-200": idx() % 2 === 0 }}

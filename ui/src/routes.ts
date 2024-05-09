@@ -10,6 +10,10 @@ export const routes: RouteDefinition[] = [
 				path: "/",
 				component: lazy(() => import("./screens/Bolivia")),
 			},
+			{
+				path: "/:deptoId",
+				component: lazy(() => import("./screens/Depto")),
+			},
 		],
 	}
 ];
