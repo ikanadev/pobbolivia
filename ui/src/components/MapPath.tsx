@@ -41,7 +41,7 @@ export default function MapPath(props: Props) {
 			d={pathGenerator(feature()) ?? ""}
 			fill={props.fill}
 			class="cursor-pointer z-10"
-			stroke="#fff"
+			stroke="#475569"
 			stroke-width="0.2"
 		/>
 	);

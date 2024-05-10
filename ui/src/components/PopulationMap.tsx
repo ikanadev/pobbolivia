@@ -4,12 +4,12 @@ import { populationColor } from "@/utils";
 import { For, createMemo } from "solid-js";
 import { createStore } from "solid-js/store";
 
-const initialBox = {
+const initialBox = () => ({
 	x0: Number.POSITIVE_INFINITY,
 	y0: Number.POSITIVE_INFINITY,
 	x1: Number.NEGATIVE_INFINITY,
 	y1: Number.NEGATIVE_INFINITY,
-};
+});
 
 type Props = {
 	populationMaps: PopulationMapBase[];
@@ -17,7 +17,7 @@ type Props = {
 	year: string;
 };
 export default function PopulationMap(props: Props) {
-	const [box, setBox] = createStore<SvgBox>(initialBox);
+	const [box, setBox] = createStore<SvgBox>(initialBox());
 
 	const svgBox = () => `${box.x0} ${box.y0} ${box.x1 - box.x0} ${box.y1 - box.y0}`;
 
@@ -30,7 +30,7 @@ export default function PopulationMap(props: Props) {
 	});
 
 	return (
-		<svg viewBox={svgBox()} class="w-full" style="">
+		<svg viewBox={svgBox()} class="w-full max-w-xl max-h-4xl" style="">
 			<title>Bolivia</title>
 			<For each={props.populationMaps}>{(popMap) => (
 				<MapPath
@@ -41,8 +41,13 @@ export default function PopulationMap(props: Props) {
 					onClickMapSection={props.onClickMapSection}
 				/>
 			)}</For>
-			<For each={props.populationMaps}>{(popMap) => (
-				<MapText popMap={popMap} fontSize={(box.y1 - box.y0) / 40} />
+			<For each={props.populationMaps}>{(popMap, idx) => (
+				<MapText
+					popMap={popMap}
+					fontSize={(box.x1 - box.x0) / 20}
+					onClickText={props.onClickMapSection}
+					idx={idx()}
+				/>
 			)}</For>
 		</svg>
 	);

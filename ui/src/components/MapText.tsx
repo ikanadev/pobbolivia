@@ -5,7 +5,9 @@ import { buildFeature, pathGenerator } from "@/utils";
 
 type Props = {
 	popMap: PopulationMapBase;
+	onClickText: (id: string) => void;
 	fontSize: number;
+	idx: number;
 };
 export default function MapText(props: Props) {
 	const [coords] = createResource(() => props.popMap.id, fetchCoords, { initialValue: [] });
@@ -17,12 +19,14 @@ export default function MapText(props: Props) {
 		<text
 			x={centroid()[0]}
 			y={centroid()[1]}
-			fill="white"
+			class="cursor-pointer"
+			fill="#1e293b"
 			text-anchor="middle"
 			dominant-baseline="central"
 			font-size={props.fontSize.toString()}
+			onClick={() => props.onClickText(props.popMap.id)}
 		>
-			{props.popMap.name}
+			{props.idx + 1}
 		</text>
 	);
 };
