@@ -27,7 +27,7 @@ export default function Depto(props: RouteSectionProps) {
 				<>
 					<A href="/" class="text-4xl">←</A>
 					<Show when={depto()}>{(d) => (
-						<h1 class="text-center text-3xl font-bold">{d().name}</h1>
+						<h1 class="text-center text-3xl font-bold">Departamento de {d().name}</h1>
 					)}</Show>
 					<div class="mx-auto mt-4 flex flex-wrap justify-center items-center">
 						<PopulationMap

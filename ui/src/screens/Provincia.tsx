@@ -25,7 +25,7 @@ export default function Provincia(props: RouteSectionProps) {
 				<>
 					<A href={`/${props.params.deptoId}`} class="text-4xl">←</A>
 					<Show when={prov()}>{(p) => (
-						<h1 class="text-center text-3xl font-bold">{p().name}</h1>
+						<h1 class="text-center text-3xl font-bold">Provincia {p().name}</h1>
 					)}</Show>
 					<div class="mx-auto mt-4 flex flex-wrap justify-center items-center">
 						<PopulationMap
