@@ -1,6 +1,6 @@
 import { Show } from "solid-js";
 import { type RouteSectionProps, A } from "@solidjs/router";
-import { PopulationMap, PopulationTable } from "@/components";
+import { PopulationMap, PopulationTable, PopulationChart } from "@/components";
 import type { Mun } from "@/domain";
 import { usePopulationData } from "./usePopulationData";
 
@@ -34,6 +34,7 @@ export default function Provincia(props: RouteSectionProps) {
 							onClickMapSection={onSelectMun}
 						/>
 						<PopulationTable populationMaps={sortedMuns()} type="Municipio" years={years()} />
+						<PopulationChart populationMaps={sortedMuns()} years={years()} />
 					</div>
 				</>
 			)}</Show>

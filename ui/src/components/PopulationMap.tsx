@@ -30,7 +30,7 @@ export default function PopulationMap(props: Props) {
 	});
 
 	return (
-		<svg viewBox={svgBox()} class="w-full max-w-xl max-h-4xl" style="">
+		<svg viewBox={svgBox()} class="w-full max-w-xl max-h-3xl" style="">
 			<title>Bolivia</title>
 			<For each={props.populationMaps}>{(popMap) => (
 				<MapPath

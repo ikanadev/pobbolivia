@@ -1,5 +1,6 @@
 import { For } from "solid-js";
 import type { PopulationMapBase } from "@/domain";
+import { numberFormat } from "@/domain";
 
 type Props = {
 	populationMaps: PopulationMapBase[];
@@ -32,7 +33,7 @@ export default function PopulationTable(props: Props) {
 								class="text-right py-1 px-4"
 								classList={{ "rounded-r-lg": idx() === props.years.length - 1 }}
 							>
-								{depto.population[y]}
+								{numberFormat(depto.population[y])}
 							</td>
 						)}</For>
 					</tr>

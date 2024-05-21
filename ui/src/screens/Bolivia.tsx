@@ -1,6 +1,6 @@
 import { Show } from "solid-js";
 import { type RouteSectionProps, useNavigate } from "@solidjs/router";
-import { PopulationMap, PopulationTable } from "@/components";
+import { PopulationMap, PopulationTable, PopulationChart } from "@/components";
 import { usePopulationData } from "./usePopulationData";
 
 export default function(_: RouteSectionProps) {
@@ -29,6 +29,7 @@ export default function(_: RouteSectionProps) {
 							year={y()}
 						/>
 						<PopulationTable populationMaps={sortedDeptos()} type="Departamento" years={years()} />
+						<PopulationChart populationMaps={sortedDeptos()} years={years()} />
 					</div>
 				</>
 			)}</Show>
