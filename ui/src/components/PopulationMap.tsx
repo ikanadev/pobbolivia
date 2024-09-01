@@ -1,5 +1,5 @@
 import { MapPath, MapText } from "@/components";
-import { type PopulationMapBase, type SvgBox, themeStatus } from "@/domain";
+import type { PopulationMapBase, SvgBox } from "@/domain";
 import { populationColor } from "@/utils";
 import { For, createMemo } from "solid-js";
 import { createStore } from "solid-js/store";
