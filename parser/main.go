@@ -220,6 +220,38 @@ func parseMunicipios2012(deps *[]Dep) {
 	}
 }
 
+func parseMunicipios2024(deps *[]Dep, muns2024 map[string][]munPob2024) {
+	for deptoName, munPobs := range muns2024 {
+		deptoName := parseName(deptoName)
+		var depto *Dep
+		for i := range *deps {
+			if (*deps)[i].Name == deptoName {
+				depto = &(*deps)[i]
+				break
+			}
+		}
+
+		for _, munPob := range munPobs {
+			munName := parseName(munPob.mun)
+			var mun *Mun
+			for i := range depto.Provs {
+				for j := range depto.Provs[i].Muns {
+					if depto.Provs[i].Muns[j].Name == munName {
+						mun = &depto.Provs[i].Muns[j]
+						break
+					}
+				}
+			}
+			if mun == nil {
+				fmt.Println("Mun not found", depto.Name, munName, munPob.pob)
+				continue
+			}
+			mun.Population["2024"] = munPob.pob
+
+		}
+	}
+}
+
 func calculateTotals(deps *[]Dep) {
 	for i := range *deps {
 		var depto *Dep = &(*deps)[i]
@@ -276,8 +308,11 @@ func main() {
 	parseProvincias(&deps)
 	parseMunicipios2001(&deps)
 	parseMunicipios2012(&deps)
+	// 2024
+	data2024 := parsexls()
+	parseMunicipios2024(&deps, data2024)
 	calculateTotals(&deps)
-	generateCoordFiles(deps)
+	// generateCoordFiles(deps)
 
 	file, err := os.Create("data/departamentos.json")
 	panicIfErr(err)
