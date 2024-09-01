@@ -7,11 +7,12 @@ import {
 	axisLeft,
 	select,
 } from "d3";
+import * as styles from "./PopulationChart.css";
 
 const margin = { top: 10, right: 0, bottom: 200, left: 100 };
 const size = {
 	width: 1000,
-	height: document.documentElement.clientWidth < 768 ? 900 : 650,
+	height: document.documentElement.clientWidth < 768 ? 500 : 600,
 };
 
 type Props = {
@@ -57,43 +58,45 @@ export default function AgesBar(props: Props) {
 	});
 
 	return (
-		<div class="w-full max-w-4xl mt-6">
-			<h2 class="text-center font-semibold text-xl">Población ({props.years.join(", ")})</h2>
-			<svg
-				class="h-full"
-				viewBox={`0 0 ${size.width} ${size.height}`}
-			>
-				<title>Barra de edades</title>
-				<For each={y.ticks()}>{(tick) => (
-					<line
-						y1={y(tick)}
-						y2={y(tick)}
-						x1={margin.left}
-						x2={size.width - margin.right}
-						stroke="currentColor"
-						stroke-width="0.4"
-						stroke-dasharray="20 6"
-					/>
-				)}</For>
-				<For each={props.populationMaps}>
-					{(popMap) => (
-						<g transform={`translate(${x(popMap.name)}, 0)`}>
-							<For each={props.years}>{(year) => (
-								<rect
-									y={y(popMap.population[year])}
-									x={xGroup(year)}
-									height={size.height - y(popMap.population[year]) - margin.bottom}
-									width={xGroup.bandwidth()}
-									fill="#94a3b8"
-									rx={2}
-								/>
-							)}</For>
-						</g>
-					)}
-				</For>
-				<g class="text-2xl md:text-lg" ref={gy} transform={`translate(${margin.left}, 0)`} />
-				<g class="text-2xl md:text-lg" ref={gx} transform={`translate(0, ${size.height - margin.bottom})`} />
-			</svg>
+		<div class={styles.container}>
+			<h2 class={styles.title}>Población ({props.years.join(", ")})</h2>
+			<div class={styles.svgCont}>
+				<svg
+					class={styles.svg}
+					viewBox={`0 0 ${size.width} ${size.height}`}
+				>
+					<title>Población</title>
+					<For each={y.ticks()}>{(tick) => (
+						<line
+							y1={y(tick)}
+							y2={y(tick)}
+							x1={margin.left}
+							x2={size.width - margin.right}
+							stroke="currentColor"
+							stroke-width="0.4"
+							stroke-dasharray="20 6"
+						/>
+					)}</For>
+					<For each={props.populationMaps}>
+						{(popMap) => (
+							<g transform={`translate(${x(popMap.name)}, 0)`}>
+								<For each={props.years}>{(year) => (
+									<rect
+										y={y(popMap.population[year])}
+										x={xGroup(year)}
+										height={size.height - y(popMap.population[year]) - margin.bottom}
+										width={xGroup.bandwidth()}
+										fill="currentColor"
+										rx={2}
+									/>
+								)}</For>
+							</g>
+						)}
+					</For>
+					<g class={styles.labelLeft} ref={gy} transform={`translate(${margin.left}, 0)`} />
+					<g class={styles.labelBot} ref={gx} transform={`translate(0, ${size.height - margin.bottom})`} />
+				</svg>
+			</div>
 		</div>
 	);
 }

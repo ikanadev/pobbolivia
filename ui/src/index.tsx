@@ -3,8 +3,7 @@ import { Router } from "@solidjs/router";
 import { render } from 'solid-js/web';
 
 import './index.css';
-import 'virtual:uno.css';
-import '@unocss/reset/tailwind.css';
+import './reset.css';
 import App from './App';
 import { routes } from './routes';
 

@@ -1,15 +1,15 @@
-import { defineConfig } from 'vite';
-import solid from 'vite-plugin-solid';
-import UnoCSS from 'unocss/vite';
+import { defineConfig } from "vite";
+import solid from "vite-plugin-solid";
+import { vanillaExtractPlugin } from "@vanilla-extract/vite-plugin";
 
 // biome-ignore lint/style/useNodejsImportProtocol: We are in front end
 import path from "path";
 
 export default defineConfig({
-	plugins: [UnoCSS(), solid()],
+	plugins: [vanillaExtractPlugin(), solid()],
 	resolve: {
 		alias: {
-			'@': path.resolve(__dirname, './src'),
+			"@": path.resolve(__dirname, "./src"),
 		},
 	},
-})
+});

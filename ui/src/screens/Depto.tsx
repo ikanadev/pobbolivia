@@ -1,6 +1,6 @@
 import { Show } from "solid-js";
-import { type RouteSectionProps, useNavigate, A } from "@solidjs/router";
-import { PopulationMap, PopulationTable, PopulationChart } from "@/components";
+import { type RouteSectionProps, useNavigate } from "@solidjs/router";
+import { PopulationMap, PopulationTable, PopulationChart, Title, Loading } from "@/components";
 import type { Prov } from "@/domain";
 import { usePopulationData } from "./usePopulationData";
 
@@ -23,13 +23,13 @@ export default function Depto(props: RouteSectionProps) {
 
 	return (
 		<div class="pb-8">
-			<Show when={year()} fallback={<p>Cargando...</p>}>{(y) => (
+			<Show when={deptos.loading}>
+				<Loading />
+			</Show>
+			<Show when={year()}>{(y) => (
 				<>
-					<A href="/" class="text-4xl">←</A>
-					<Show when={depto()}>{(d) => (
-						<h1 class="text-center text-3xl font-bold">Departamento de {d().name}</h1>
-					)}</Show>
-					<div class="mx-auto mt-4 flex flex-wrap justify-center items-center">
+					<Title backLink="/" text={`Depto. de ${depto()?.name || ""}`} />
+					<div>
 						<PopulationMap
 							populationMaps={sortedProvs()}
 							year={y()}

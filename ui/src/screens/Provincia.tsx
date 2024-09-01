@@ -1,6 +1,6 @@
 import { Show } from "solid-js";
-import { type RouteSectionProps, A } from "@solidjs/router";
-import { PopulationMap, PopulationTable, PopulationChart } from "@/components";
+import { type RouteSectionProps } from "@solidjs/router";
+import { PopulationMap, PopulationTable, PopulationChart, Loading, Title } from "@/components";
 import type { Mun } from "@/domain";
 import { usePopulationData } from "./usePopulationData";
 
@@ -21,13 +21,13 @@ export default function Provincia(props: RouteSectionProps) {
 
 	return (
 		<div class="pb-8">
+			<Show when={deptos.loading}>
+				<Loading />
+			</Show>
 			<Show when={year()} fallback={<p>Cargando...</p>}>{(y) => (
 				<>
-					<A href={`/${props.params.deptoId}`} class="text-4xl">←</A>
-					<Show when={prov()}>{(p) => (
-						<h1 class="text-center text-3xl font-bold">Provincia {p().name}</h1>
-					)}</Show>
-					<div class="mx-auto mt-4 flex flex-wrap justify-center items-center">
+					<Title backLink={`/${props.params.deptoId}`} text={`Provincia ${prov()?.name || ""}`} />
+					<div>
 						<PopulationMap
 							populationMaps={sortedMuns()}
 							year={y()}

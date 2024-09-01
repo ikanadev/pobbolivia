@@ -1,8 +1,9 @@
 import { MapPath, MapText } from "@/components";
-import type { PopulationMapBase, SvgBox } from "@/domain";
+import { type PopulationMapBase, type SvgBox, themeStatus } from "@/domain";
 import { populationColor } from "@/utils";
 import { For, createMemo } from "solid-js";
 import { createStore } from "solid-js/store";
+import * as styles from "./PopulationMap.css";
 
 const initialBox = () => ({
 	x0: Number.POSITIVE_INFINITY,
@@ -30,7 +31,7 @@ export default function PopulationMap(props: Props) {
 	});
 
 	return (
-		<svg viewBox={svgBox()} class="w-full max-w-xl max-h-3xl" style="">
+		<svg viewBox={svgBox()} class={styles.svg}>
 			<title>Bolivia</title>
 			<For each={props.populationMaps}>{(popMap) => (
 				<MapPath
