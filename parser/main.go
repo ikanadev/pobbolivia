@@ -312,7 +312,7 @@ func main() {
 	data2024 := parsexls()
 	parseMunicipios2024(&deps, data2024)
 	calculateTotals(&deps)
-	// generateCoordFiles(deps)
+	generateCoordFiles(deps)
 
 	file, err := os.Create("data/departamentos.json")
 	panicIfErr(err)
